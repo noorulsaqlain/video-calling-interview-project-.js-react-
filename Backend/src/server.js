@@ -25,7 +25,7 @@ if (ENV.NODE_ENV === "development") {
 
 const startServer = async () => {
   try {
-     await connectDB();
+    await connectDB();
   app.listen(ENV.PORT, () => {
     console.log("Server is running on port:", ENV.PORT);
   });
