@@ -1,13 +1,38 @@
-import express from "express"
-
+import express from "express";
+import path from "path";
 import { ENV } from "./lib/env.js";
+import { connectDB } from "./lib/db.js";
+import { error } from "console";
 
-const app = express()
+const app = express();
 
-console.log(ENV.PORT);
-console.log(ENV.DB_URL);
-app.get("/kela",(req,res) =>
-{
-    res.status(200).json({msg:"success api is runnimg im server"})
-})
-app.listen(ENV.PORT, () => console.log("Server is running on port:",ENV.PORT))
+const __dirname = path.resolve();
+
+app.get("/kela", (req, res) => {
+  res.status(200).json({ msg: "Api is runnimg in server" });
+});
+app.get("/mango", (req, res) => {
+  res.status(200).json({ msg: "this is the endpoint of Api" });
+});
+//make our app ready for deployment
+if (ENV.NODE_ENV === "development") {
+  app.use(express.static(path.join(__dirname, "../frontend/dist")));
+
+  app.get("/{*any}", (req, res) => {
+    res.sendFile(path.join(__dirname, "../frontend", "dist", "index.html"));
+  });
+}
+
+const startServer = async () => {
+  try {
+    await connectDB();
+  app.listen(ENV.PORT, () => {
+    console.log("Server is running on port:", ENV.PORT);
+  });
+  } catch (error) {
+    console.error("💨💨 error running in the server:",error);
+  }
+ 
+};
+
+startServer();
