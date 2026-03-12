@@ -1,0 +1,25 @@
+{
+  "name": "stack-web-dev-project",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "npm run dev --prefix Backend",
+    "dev:server": "npm run dev --prefix Backend",
+    "dev:client": "npm run dev --prefix Frontend",
+    "build": "npm install --prefix Backend && npm install --prefix Frontend && npm run build --prefix Frontend",
+    "start": "npm run start --prefix Backend"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/noorulsaqlain/video-calling-interview-project-.js-react-.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/noorulsaqlain/video-calling-interview-project-.js-react-/issues"
+  },
+  "homepage": "https://github.com/noorulsaqlain/video-calling-interview-project-.js-react-#readme"
+}
