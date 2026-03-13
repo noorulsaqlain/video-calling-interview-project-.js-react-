@@ -1,12 +1,21 @@
 import express from "express";
 import path from "path";
+import cors from "cors";
 import { ENV } from "./lib/env.js";
 import { connectDB } from "./lib/db.js";
-import { error } from "console";
+import { Serve } from "inngest/express";
+import { inngest } from "./lib/inngest.js";
 
 const app = express();
 
 const __dirname = path.resolve();
+
+// middlewares
+app.use(express.json())
+//credentials:true ?? MEANS SERVER ALLOWS TO BROWSER TO INCLDE COOKIES ON REQ
+app.use(cors({origin:ENV.CLIENT_URL,credentials:true}))
+
+app.use("/api/inngest", Serve({client: inngest, functions}))
 
 app.get("/kela", (req, res) => {
   res.status(200).json({ msg: "Api is runnimg in server" });
