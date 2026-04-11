@@ -32,16 +32,23 @@ if (ENV.NODE_ENV === "development") {
   });
 }
 
-const startServer = async () => {
-  try {
-    await connectDB();
-  app.listen(ENV.PORT, () => {
-    console.log("Server is running on port:", ENV.PORT);
-  });
-  } catch (error) {
-    console.error("💨💨 error running in the server:",error);
-  }
- 
-};
+if (process.env.NODE_ENV !== "production") {
+  const startServer = async () => {
+    try {
+      await connectDB();
+      app.listen(ENV.PORT, () => {
+        console.log("Server is running on port:", ENV.PORT);
+      });
+    } catch (error) {
+      console.error("💨💨 error running in the server:", error);
+    }
+  };
 
-startServer();
+  startServer();
+} else {
+  // In production (Vercel serverless execution), connect to DB directly.
+  // Mongoose handles queueing requests until the connection is established.
+  connectDB().catch(err => console.error("Error connecting to DB:", err));
+}
+
+export default app;
