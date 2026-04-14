@@ -12,7 +12,7 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
-    "@clerk/express": "^1.7.41",
+    "@clerk/express": "^2.1.0",
     "@stream-io/node-sdk": "^0.7.12",
     "cors": "^2.8.5",
     "dotenv": "^17.2.3",

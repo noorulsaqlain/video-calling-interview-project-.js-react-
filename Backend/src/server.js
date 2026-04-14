@@ -4,7 +4,10 @@ import cors from "cors";
 import { ENV } from "./lib/env.js";
 import { connectDB } from "./lib/db.js";
 import { serve } from "inngest/express";
+import { clerkMiddleware } from '@clerk/express'
+
 import { functions, inngest } from "./lib/inngest.js";
+import chatRoutes from "./routes/chatRoutes.js";
 
 const app = express();
 
@@ -15,14 +18,16 @@ app.use(express.json())
 //credentials:true ?? MEANS SERVER ALLOWS TO BROWSER TO INCLDE COOKIES ON REQ
 app.use(cors({origin:ENV.CLIENT_URL,credentials:true}));
 
-app.use("/api/inngest", serve({ client: inngest, functions }));
+app.use(clerkMiddleware()); // this adds auth field to request object: req.auth()
 
-app.get("/kela", (req, res) => {
+
+app.use("/api/inngest", serve({ client: inngest, functions }));
+app.use("/api/chat", chatRoutes);
+
+app.get("/health", (req, res) => {
   res.status(200).json({ msg: "Api is runnimg in server" });
 });
-app.get("/mango", (req, res) => {
-  res.status(200).json({ msg: "this is the endpoint of Api" });
-});
+
 //make our app ready for deployment
 if (ENV.NODE_ENV === "development") {
   app.use(express.static(path.join(__dirname, "../frontend/dist")));
