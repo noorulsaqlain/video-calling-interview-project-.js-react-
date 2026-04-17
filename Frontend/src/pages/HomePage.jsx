@@ -69,15 +69,15 @@ function HomePage() {
 
             {/* FEATURE PILLS */}
             <div className="flex flex-wrap gap-3">
-              <div className="badge badge-lg badge-outline">
+              <div className="badge badge-lg badge-outline hover:badge-primary hover:scale-105 transition-all duration-200 cursor-default">
                 <CheckIcon className="size-4 text-success" />
                 Live Video Chat
               </div>
-              <div className="badge badge-lg badge-outline">
+              <div className="badge badge-lg badge-outline hover:badge-primary hover:scale-105 transition-all duration-200 cursor-default">
                 <CheckIcon className="size-4 text-success" />
                 Code Editor
               </div>
-              <div className="badge badge-lg badge-outline">
+              <div className="badge badge-lg badge-outline hover:badge-primary hover:scale-105 transition-all duration-200 cursor-default">
                 <CheckIcon className="size-4 text-success" />
                 Multi-Language
               </div>
@@ -86,13 +86,13 @@ function HomePage() {
             {/* CTA Buttons */}
             <div className="flex flex-wrap gap-4">
               <SignInButton mode="modal">
-                <button className="btn btn-primary btn-lg">
+                <button className="btn btn-primary btn-lg hover:scale-105 hover:shadow-xl transition-all duration-200 active:scale-95">
                   Start Coding Now
-                  <ArrowRightIcon className="size-5" />
+                  <ArrowRightIcon className="size-5 group-hover:translate-x-1 transition-transform" />
                 </button>
               </SignInButton>
 
-              <button className="btn btn-outline btn-lg">
+              <button className="btn btn-outline btn-lg hover:scale-105 hover:shadow-lg transition-all duration-200 active:scale-95">
                 <VideoIcon className="size-5" />
                 Watch Demo
               </button>
@@ -100,15 +100,15 @@ function HomePage() {
 
             {/* STATS */}
             <div className="stats stats-vertical lg:stats-horizontal bg-base-100 shadow-lg">
-              <div className="stat">
+              <div className="stat hover:bg-base-200 transition-colors duration-200 cursor-default">
                 <div className="stat-value text-primary">10K+</div>
                 <div className="stat-title">Active Users</div>
               </div>
-              <div className="stat">
+              <div className="stat hover:bg-base-200 transition-colors duration-200 cursor-default">
                 <div className="stat-value text-secondary">50K+</div>
                 <div className="stat-title">Sessions</div>
               </div>
-              <div className="stat">
+              <div className="stat hover:bg-base-200 transition-colors duration-200 cursor-default">
                 <div className="stat-value text-accent">99.9%</div>
                 <div className="stat-title">Uptime</div>
               </div>
@@ -138,12 +138,12 @@ function HomePage() {
         {/* FEATURES GRID */}
         <div className="grid md:grid-cols-3 gap-8">
           {/* Feature 1 */}
-          <div className="card bg-base-100 shadow-xl">
+          <div className="card bg-base-100 shadow-xl hover:-translate-y-2 hover:shadow-2xl hover:border hover:border-primary/30 transition-all duration-300 cursor-default group">
             <div className="card-body items-center text-center">
-              <div className="size-16 bg-primary/10 rounded-2xl flex items-center justify-center mb-4">
+              <div className="size-16 bg-primary/10 rounded-2xl flex items-center justify-center mb-4 group-hover:bg-primary/20 group-hover:scale-110 transition-all duration-300">
                 <VideoIcon className="size-8 text-primary" />
               </div>
-              <h3 className="card-title">HD Video Call</h3>
+              <h3 className="card-title group-hover:text-primary transition-colors duration-200">HD Video Call</h3>
               <p className="text-base-content/70">
                 Crystal clear video and audio for seamless communication during interviews
               </p>
@@ -151,12 +151,12 @@ function HomePage() {
           </div>
 
           {/* Feature 2 */}
-          <div className="card bg-base-100 shadow-xl">
+          <div className="card bg-base-100 shadow-xl hover:-translate-y-2 hover:shadow-2xl hover:border hover:border-secondary/30 transition-all duration-300 cursor-default group">
             <div className="card-body items-center text-center">
-              <div className="size-16 bg-primary/10 rounded-2xl flex items-center justify-center mb-4">
-                <Code2Icon className="size-8 text-primary" />
+              <div className="size-16 bg-primary/10 rounded-2xl flex items-center justify-center mb-4 group-hover:bg-secondary/20 group-hover:scale-110 transition-all duration-300">
+                <Code2Icon className="size-8 text-primary group-hover:text-secondary transition-colors duration-200" />
               </div>
-              <h3 className="card-title">Live Code Editor</h3>
+              <h3 className="card-title group-hover:text-secondary transition-colors duration-200">Live Code Editor</h3>
               <p className="text-base-content/70">
                 Collaborate in real-time with syntax highlighting and multiple language support
               </p>
@@ -164,12 +164,12 @@ function HomePage() {
           </div>
 
           {/* Feature 3 */}
-          <div className="card bg-base-100 shadow-xl">
+          <div className="card bg-base-100 shadow-xl hover:-translate-y-2 hover:shadow-2xl hover:border hover:border-accent/30 transition-all duration-300 cursor-default group">
             <div className="card-body items-center text-center">
-              <div className="size-16 bg-primary/10 rounded-2xl flex items-center justify-center mb-4">
-                <UsersIcon className="size-8 text-primary" />
+              <div className="size-16 bg-primary/10 rounded-2xl flex items-center justify-center mb-4 group-hover:bg-accent/20 group-hover:scale-110 transition-all duration-300">
+                <UsersIcon className="size-8 text-primary group-hover:text-accent transition-colors duration-200" />
               </div>
-              <h3 className="card-title">Easy Collaboration</h3>
+              <h3 className="card-title group-hover:text-accent transition-colors duration-200">Easy Collaboration</h3>
               <p className="text-base-content/70">
                 Share your screen, discuss solutions, and learn from each other in real-time
               </p>
