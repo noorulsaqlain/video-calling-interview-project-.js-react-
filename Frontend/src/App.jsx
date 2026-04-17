@@ -8,17 +8,22 @@ import {
 } from "@clerk/clerk-react";
 import { Navigate, Route, Routes } from "react-router";
 import HomePage from "./pages/HomePage";
+import DashboardPage from "./pages/DashBoardOage";
 
 import ProblemsPage from "./pages/ProblemsPage";
 import { Toaster } from "react-hot-toast";
 
 function App() {
-  const { isSignedIn } = useUser();
+ const { isSignedIn, isLoaded } = useUser();
+
+  // this will get rid of the flickering effect
+  if (!isLoaded) return null;
 
   return (
     <>
       <Routes>
-        <Route path="/" element={<HomePage />} />
+        <Route path="/" element={!isSignedIn ? <HomePage /> : <Navigate to={"/dashboard"} />} />
+        <Route path="/dashboard" element={isSignedIn ? <DashboardPage /> : <Navigate to={"/"} />} />
           <Route path="/problems" element={isSignedIn ? <ProblemsPage /> : <Navigate to={"/"} />} />
       </Routes>
       <Toaster toastOptions={{ duration: 3000 }} />
@@ -27,5 +32,3 @@ function App() {
 }
 export default App;
 
-// tw, daisyui, react-router, react-hot-toast,
-// todo: react-query aka tanstack query, axios
