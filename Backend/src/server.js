@@ -17,7 +17,7 @@ const __dirname = path.resolve();
 // middlewares
 app.use(express.json())
 //credentials:true ?? MEANS SERVER ALLOWS TO BROWSER TO INCLDE COOKIES ON REQ
-app.use(cors({origin:ENV.CLIENT_URL,credentials:true}));
+app.use(cors({ origin: ENV.CLIENT_URL, credentials: true })); // CORS Fix
 
 app.use(clerkMiddleware()); // this adds auth field to request object: req.auth()
 
