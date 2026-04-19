@@ -16,8 +16,25 @@ const __dirname = path.resolve();
 
 // middlewares
 app.use(express.json())
-//credentials:true ?? MEANS SERVER ALLOWS TO BROWSER TO INCLDE COOKIES ON REQ
-app.use(cors({ origin: ENV.CLIENT_URL, credentials: true })); // CORS Fix
+// CORS configuration
+const allowedOrigins = [
+  ENV.CLIENT_URL,
+  "https://video-calling-interview-project-js.vercel.app", 
+  "http://localhost:5173",
+].filter(Boolean);
+
+app.use(cors({
+  origin: (origin, callback) => {
+    // Allow requests with no origin (like mobile apps or curl)
+    if (!origin) return callback(null, true);
+    if (allowedOrigins.indexOf(origin) !== -1 || process.env.NODE_ENV === "development") {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  credentials: true 
+}));
 
 app.use(clerkMiddleware()); // this adds auth field to request object: req.auth()
 
