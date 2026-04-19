@@ -18,7 +18,7 @@ function DashboardPage() {
 
   const createSessionMutation = useCreateSession();
 
-  const { data: activeSessionsData, isLoading: loadingActiveSessions } = useActiveSessions();
+  const { data: activeSessionsData, isLoading: loadingActiveSessions, refetch: refetchActiveSessions } = useActiveSessions();
   const { data: recentSessionsData, isLoading: loadingRecentSessions } = useMyRecentSessions();
 
   const handleCreateRoom = () => {
@@ -32,7 +32,12 @@ function DashboardPage() {
       {
         onSuccess: (data) => {
           setShowCreateModal(false);
-          navigate(`/session/${data.session._id}`);
+          // Explicitly refetch to ensure dashboard list updates immediately
+          refetchActiveSessions();
+          // Navigate to the new session
+          if (data?.session?._id) {
+            navigate(`/session/${data.session._id}`);
+          }
         },
       }
     );

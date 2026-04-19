@@ -19,7 +19,6 @@ app.use(express.json())
 // CORS configuration
 const allowedOrigins = [
   ENV.CLIENT_URL,
-  "https://video-calling-interview-project-js.vercel.app", 
   "http://localhost:5173",
 ].filter(Boolean);
 
@@ -27,9 +26,15 @@ app.use(cors({
   origin: (origin, callback) => {
     // Allow requests with no origin (like mobile apps or curl)
     if (!origin) return callback(null, true);
-    if (allowedOrigins.indexOf(origin) !== -1 || process.env.NODE_ENV === "development") {
+    
+    const isVercel = origin.endsWith(".vercel.app");
+    const isLocal = origin.startsWith("http://localhost");
+    const isAllowed = allowedOrigins.includes(origin);
+
+    if (isAllowed || isVercel || isLocal || process.env.NODE_ENV === "development") {
       callback(null, true);
     } else {
+      console.warn(`CORS blocked for origin: ${origin}`);
       callback(new Error('Not allowed by CORS'));
     }
   },
