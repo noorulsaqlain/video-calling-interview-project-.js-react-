@@ -81,7 +81,7 @@ export async function getMyRecentSessions(req, res) {
       $or: [{ host: userId }, { participant: userId }],
     })
       .sort({ createdAt: -1 })
-      .limit(20);
+      .limit(6);
 
     res.status(200).json({ sessions });
   } catch (error) {
