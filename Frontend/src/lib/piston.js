@@ -68,12 +68,3 @@ export async function executeCode(language, code) {
   }
 }
 
-function getFileExtension(language) {
-  const extensions = {
-    javascript: "js",
-    python: "py",
-    java: "java",
-  };
-
-  return extensions[language] || "txt";
-}

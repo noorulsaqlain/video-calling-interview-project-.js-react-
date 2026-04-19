@@ -1,4 +1,4 @@
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import { sessionApi } from "../api/sessions";
 
@@ -42,23 +42,53 @@ export const useSessionById = (id) => {
     return result;
 };
 
-export const useJoinSession = (id) => {
+export const useJoinSession = () => {
+    const queryClient = useQueryClient();
+
     const result = useMutation({
         mutationKey: ["joinSession"],
-        mutationFn: () => sessionApi.joinSession(id),
-        onSuccess: () => toast.success("Joined session successfully!"),
+        mutationFn: sessionApi.joinSession,
+        onSuccess: (_, id) => {
+            queryClient.invalidateQueries({ queryKey: ["session", id] });
+            queryClient.invalidateQueries({ queryKey: ["activeSessions"] });
+            toast.success("Joined session successfully!");
+        },
         onError: (error) => toast.error(error.response?.data?.message || "Failed to join session"),
     });
 
     return result;
 };
 
-export const useEndSession = (id) => {
+export const useLeaveSession = () => {
+    const queryClient = useQueryClient();
+
+    const result = useMutation({
+        mutationKey: ["leaveSession"],
+        mutationFn: sessionApi.leaveSession,
+        onSuccess: (_, id) => {
+            queryClient.invalidateQueries({ queryKey: ["session", id] });
+            queryClient.invalidateQueries({ queryKey: ["activeSessions"] });
+            toast.success("You left the session");
+        },
+        onError: (error) => toast.error(error.response?.data?.message || "Failed to leave session"),
+    });
+
+    return result;
+};
+
+export const useEndSession = () => {
+    const queryClient = useQueryClient();
+
     const result = useMutation({
         mutationKey: ["endSession"],
-        mutationFn: () => sessionApi.endSession(id),
-        onSuccess: () => toast.success("Session ended successfully!"),
-        onError: (error) => toast.error(error.response?.data?.message || "Failed to join session"),
+        mutationFn: sessionApi.endSession,
+        onSuccess: (_, id) => {
+            queryClient.invalidateQueries({ queryKey: ["session", id] });
+            queryClient.invalidateQueries({ queryKey: ["activeSessions"] });
+            queryClient.invalidateQueries({ queryKey: ["myRecentSessions"] });
+            toast.success("Session ended successfully!");
+        },
+        onError: (error) => toast.error(error.response?.data?.message || "Failed to end session"),
     });
 
     return result;
