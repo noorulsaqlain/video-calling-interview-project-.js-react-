@@ -15,22 +15,26 @@ export const chatClient = StreamChat.getInstance(apiKey, apiSecret); // will be 
 export const streamClient = new StreamClient(apiKey, apiSecret); // will be used for video calls
 
 
-export const upsertStreamUser = async(userData) => {
+export const upsertStreamUser = async (userData) => {
     try {
+        // Sync to Chat
         await chatClient.upsertUser(userData);
-        console.log("stream user upserted successfully",userData);
+        // Sync to Video
+        await streamClient.upsertUsers([userData]);
+        console.log("stream user upserted successfully to both Chat and Video", userData);
     } catch (error) {
-        console.error("error in upserting stream user",error);
+        console.error("error in upserting stream user", error);
     }
 }
 
 
-export const deleteStreamUser = async(userId) => {
+export const deleteStreamUser = async (userId) => {
     try {
         await chatClient.deleteUser(userId);
-         console.log("stream user deleted successfully",userId);
+        await streamClient.deleteUsers([userId]);
+        console.log("stream user deleted successfully from both Chat and Video", userId);
     } catch (error) {
-        console.error("error in deleting the stream user",error);
+        console.error("error in deleting the stream user", error);
     }
 }
 
