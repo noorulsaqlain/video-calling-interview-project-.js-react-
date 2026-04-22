@@ -27,9 +27,9 @@ app.use(cors({
     // Allow requests with no origin (like mobile apps or curl)
     if (!origin) return callback(null, true);
     
-    const isVercel = origin.endsWith(".vercel.app");
-    const isLocal = origin.startsWith("http://localhost");
-    const isAllowed = allowedOrigins.includes(origin);
+    const isVercel = origin && (origin.endsWith(".vercel.app") || /^https?:\/\/.*\.vercel\.app$/.test(origin));
+    const isLocal = origin && (origin.startsWith("http://localhost") || origin.startsWith("http://127.0.0.1"));
+    const isAllowed = origin && allowedOrigins.includes(origin);
 
     if (isAllowed || isVercel || isLocal || process.env.NODE_ENV === "development") {
       callback(null, true);
