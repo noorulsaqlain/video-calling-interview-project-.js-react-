@@ -16,7 +16,15 @@ function DashboardPage() {
   const [showCreateModal, setShowCreateModal] = useState(false);
   const [roomConfig, setRoomConfig] = useState({ problem: "", difficulty: "" });
 
-  const createSessionMutation = useCreateSession();
+  const createSessionMutation = useCreateSession((data) => {
+    setShowCreateModal(false);
+    // Explicitly refetch to ensure dashboard list updates immediately
+    refetchActiveSessions();
+    // Navigate to the new session
+    if (data?.session?._id) {
+      navigate(`/session/${data.session._id}`);
+    }
+  });
 
   const { data: activeSessionsData, isLoading: loadingActiveSessions, refetch: refetchActiveSessions } = useActiveSessions();
   const { data: recentSessionsData, isLoading: loadingRecentSessions } = useMyRecentSessions();
@@ -24,23 +32,10 @@ function DashboardPage() {
   const handleCreateRoom = () => {
     if (!roomConfig.problem || !roomConfig.difficulty) return;
 
-    createSessionMutation.mutate(
-      {
-        problem: roomConfig.problem,
-        difficulty: roomConfig.difficulty.toLowerCase(),
-      },
-      {
-        onSuccess: (data) => {
-          setShowCreateModal(false);
-          // Explicitly refetch to ensure dashboard list updates immediately
-          refetchActiveSessions();
-          // Navigate to the new session
-          if (data?.session?._id) {
-            navigate(`/session/${data.session._id}`);
-          }
-        },
-      }
-    );
+    createSessionMutation.mutate({
+      problem: roomConfig.problem,
+      difficulty: roomConfig.difficulty.toLowerCase(),
+    });
   };
 
   const activeSessions = activeSessionsData?.sessions || [];
